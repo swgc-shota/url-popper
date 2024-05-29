@@ -8,7 +8,7 @@
   "web_accessible_resources": [
     {
       "resources": ["content.css"],
-      "matches": ["<all_urls>"]
+      "matches": ["http://*/*", "https://*/*"]
     }
   ],
   "content_scripts": [
