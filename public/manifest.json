@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Url Popper",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "This browser extension displays the URL when the cursor hovers over a link.",
   "permissions": ["storage", "tabs"],
   "host_permissions": ["http://*/*", "https://*/*"],
