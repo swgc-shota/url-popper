@@ -30,3 +30,4 @@ certs
 *.md
 *.spec.md
 !README.md
+dist.zip
