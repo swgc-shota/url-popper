@@ -1,0 +1,8 @@
+{
+  "appName": {
+    "message": "Url Popper"
+  },
+  "appDescription": {
+    "message": "カーソルが乗ったリンクのURLを表示する拡張機能です。"
+  }
+}
