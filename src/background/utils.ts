@@ -1,4 +1,4 @@
-export const MSG_TYPE = {
+/*export const MSG_TYPE = {
   TOGGLE_APP: "20240519-0",
   TOGGLE_COPYMODE: "20240519-1",
   SUCCESS: "20240519-2",
@@ -28,7 +28,7 @@ export const BTN_TYPE = {
   URL: "url",
   TEXT: "text",
 } as const;
-
+*/
 export const getDate = (): string => {
   const currentDate = new Date();
 

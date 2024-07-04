@@ -2,7 +2,7 @@ import van, { State } from "vanjs-core";
 import { copyAndAnimate } from "./copyActions";
 import { createBoundaryWatcher, hideTimer } from "./boundaryWatcher";
 import { createHoverWatcher } from "./hoverWatcher";
-import { MY_EVT, BTN_TYPE } from "../utils/constant";
+import { MY_EVT, BTN_TYPE } from "../../utils/constant";
 
 const { div, button } = van.tags;
 

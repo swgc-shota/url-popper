@@ -1,12 +1,7 @@
 import { initUrlPopper, deinitUrlPopper } from "./UrlPopper/UrlPopper";
 import { fireCustomEvent, fetchFromStorage } from "./utils/utils";
-import {
-  MY_EVT,
-  MSG_TYPE,
-  STOR_KEY,
-  APP_STATUS,
-} from "../content/utils/constant";
-
+import { MY_EVT, MSG_TYPE, STOR_KEY, APP_STATUS } from "../utils/constant";
+import type { Message } from "../utils/constant";
 const initAppStateToggler = async (): Promise<void> => {
   chrome.runtime.onMessage.addListener(messageListener);
   const currentStatus = await fetchFromStorage(STOR_KEY.APP_STATUS);

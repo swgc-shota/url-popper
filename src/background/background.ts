@@ -1,5 +1,5 @@
-import { STOR_KEY, APP_STATUS, COPY_MODE, MSG_TYPE } from "./utils";
-
+import { STOR_KEY, APP_STATUS, COPY_MODE, MSG_TYPE } from "../utils/constant";
+import type { Message } from "../utils/constant";
 const loadApp = async () => {
   chrome.runtime.onInstalled.addListener(reloadAllTabs);
   chrome.runtime.onStartup.addListener(reloadAllTabs);

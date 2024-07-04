@@ -3,7 +3,7 @@ import { prepareContainer } from "../utils/customElementsPolyfill";
 import { Content } from "./Content";
 import { CopyModeToggler } from "./CopyModeToggler";
 import { fetchFromStorage } from "../utils/utils";
-import { STOR_KEY, COPY_MODE } from "../utils/constant";
+import { STOR_KEY, COPY_MODE } from "../../utils/constant";
 
 const { div } = van.tags;
 

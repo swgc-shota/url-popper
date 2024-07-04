@@ -7,7 +7,7 @@
  * the bare minimum necessary.
  * Tutorial | Rollup | https://rollupjs.org/tutorial/
  */
-
+import type { Message } from "../../utils/constant";
 import { cursorWatcher } from "../cursorWatcher/cursorWatcher";
 
 let timerId: NodeJS.Timeout | undefined = undefined;

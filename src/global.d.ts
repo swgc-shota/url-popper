@@ -1,21 +1,12 @@
 //background.ts / content.ts
-
-declare const MSG_TYPE: {
-  readonly TOGGLE_APP: "20240519-0";
-  readonly TOGGLE_COPYMODE: "20240519-1";
-  readonly SUCCESS: "20240519-2";
-  readonly FAILED: "20240519-3";
-  readonly UNKNOWN: "20240519-4";
-};
-
-type MessageType = (typeof MSG_TYPE)[keyof typeof MSG_TYPE];
-
+/*
 type Message = {
   readonly type: MessageType;
   readonly newStatus?: AppStatus;
   readonly newCopyMode?: CopyMode;
 };
-
+type MessageType = (typeof MSG_TYPE)[keyof typeof MSG_TYPE];
+*/
 declare const COPY_MODE: {
   readonly BOTH: "1";
   readonly SINGLE: "0";
