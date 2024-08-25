@@ -1,0 +1,8 @@
+{
+  "appName": {
+    "message": "Url Popper"
+  },
+  "appDescription": {
+    "message": "This browser extension displays the URL when the cursor hovers over a link."
+  }
+}
