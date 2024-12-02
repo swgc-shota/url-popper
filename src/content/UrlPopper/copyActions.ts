@@ -1,5 +1,5 @@
-import { State } from "vanjs-core";
-import { selectComponent } from "../utils/utils";
+import { State } from 'vanjs-core';
+import { selectComponent } from '../utils/utils';
 
 const copyAndAnimate = (
   e: MouseEvent,
@@ -7,13 +7,13 @@ const copyAndAnimate = (
   BTN_TYPE: BtnType,
   PopperTexts: State<PopperTexts>
 ) => {
-  copyPopperTexts(copyBoth, BTN_TYPE, PopperTexts);
+  copyPopperTexts(copyBoth, BTN_TYPE, PopperTexts, e.shiftKey);
   bouncePopperTexts(copyBoth, e.target as HTMLElement);
 };
 
 const bouncePopperTexts = (copyBoth: State<boolean>, target: HTMLElement) => {
   if (copyBoth.val) {
-    const buttonsContainer = selectComponent("copy-buttons-container");
+    const buttonsContainer = selectComponent('copy-buttons-container');
     bounceOnce(buttonsContainer);
   } else {
     bounceOnce(target);
@@ -21,19 +21,22 @@ const bouncePopperTexts = (copyBoth: State<boolean>, target: HTMLElement) => {
 };
 
 const bounceOnce = (target: Element) => {
-  target.classList.add("animate-text-bounce");
+  target.classList.add('animate-text-bounce');
   setTimeout(() => {
-    target.classList.remove("animate-text-bounce");
+    target.classList.remove('animate-text-bounce');
   }, 400);
 };
 
 const copyPopperTexts = (
   copyBoth: State<boolean>,
   buttonType: BtnType,
-  PopperTexts: State<PopperTexts>
+  PopperTexts: State<PopperTexts>,
+  isShiftPressed: boolean
 ) => {
-  if (copyBoth.val) {
-    copyText(PopperTexts.val.text + "\n" + PopperTexts.val.url);
+  if (copyBoth.val && isShiftPressed) {
+    copyText(`[${PopperTexts.val.text}](${PopperTexts.val.url})`);
+  } else if (copyBoth.val) {
+    copyText(PopperTexts.val.text + '\n' + PopperTexts.val.url);
   } else {
     copyText(PopperTexts.val[buttonType]);
   }
@@ -41,14 +44,14 @@ const copyPopperTexts = (
 
 const copyText = async (text: string) => {
   if (!navigator.clipboard) {
-    console.warn("Clipboard API not supported");
+    console.warn('Clipboard API not supported');
     return;
   }
 
   try {
     await navigator.clipboard.writeText(text);
   } catch (err) {
-    console.warn("Failed to copy text: ", err);
+    console.warn('Failed to copy text: ', err);
   }
 };
 export { copyAndAnimate, copyPopperTexts };
