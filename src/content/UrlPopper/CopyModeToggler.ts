@@ -1,6 +1,6 @@
 import van, { State } from "vanjs-core";
 import { sendMessageToBackground } from "../utils/utils";
-import { MY_EVT, MSG_TYPE, COPY_MODE } from "../utils/constant";
+import { MY_EVT, MSG_TYPE, COPY_MODE } from "../../utils/constant";
 
 const { svg, g, path } = van.tags("http://www.w3.org/2000/svg");
 const { div, button } = van.tags;

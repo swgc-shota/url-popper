@@ -1,16 +1,5 @@
-import { STOR_KEY, APP_STATUS, COPY_MODE, MSG_TYPE } from "./utils";
-
-const loadApp = async () => {
-  chrome.runtime.onInstalled.addListener(reloadAllTabs);
-  chrome.runtime.onStartup.addListener(reloadAllTabs);
-  /**
-   * When the extension is installed, all tabs are reloaded.
-   * However, When the extension is toggled on or off, tabs are not automatically reloaded.
-   * Therefore, initApp() and reloadAllTabs() are explicitly called here.
-   */
-  await initApp();
-  reloadAllTabs();
-};
+import { STOR_KEY, APP_STATUS, COPY_MODE, MSG_TYPE } from "../utils/constant";
+import type { Message } from "../utils/constant";
 
 const reloadAllTabs = async () => {
   const tabs = await chrome.tabs.query({});
@@ -57,13 +46,13 @@ const updateBadge = (newStatus: AppStatus) => {
   const iconName = isNewStatusOff ? "icon16_off.png" : "icon16_on.png";
   chrome.action.setIcon({ path: `images/${iconName}` });
 };
-
+/*
 const initListeners = (): void => {
   chrome.action.onClicked.addListener(clickListener);
   chrome.runtime.onMessage.addListener(messageListener);
 };
-
-const clickListener = async (): Promise<void> => {
+*/
+chrome.action.onClicked.addListener(async (): Promise<void> => {
   const currentStatus: AppStatus = await getAppStatus();
   const isOn = currentStatus === APP_STATUS.ON;
   const newStatus = isOn ? APP_STATUS.OFF : APP_STATUS.ON;
@@ -72,30 +61,32 @@ const clickListener = async (): Promise<void> => {
     newStatus: newStatus,
   };
   toggleApp(message);
-};
+});
 
-const messageListener = (
-  message: Message,
-  sender: chrome.runtime.MessageSender,
-  sendResponse: (response?: any) => void
-) => {
-  const _tabId = sender.tab?.id;
-  const exceptTabIds = _tabId === undefined ? [] : [_tabId];
+chrome.runtime.onMessage.addListener(
+  (
+    message: Message,
+    sender: chrome.runtime.MessageSender,
+    sendResponse: (response?: any) => void
+  ) => {
+    const _tabId = sender.tab?.id;
+    const exceptTabIds = _tabId === undefined ? [] : [_tabId];
 
-  switch (message.type) {
-    case MSG_TYPE.TOGGLE_APP:
-      toggleApp(message, exceptTabIds);
-      break;
-    case MSG_TYPE.TOGGLE_COPYMODE:
-      toggleCopyMode(message, exceptTabIds);
-      break;
+    switch (message.type) {
+      case MSG_TYPE.TOGGLE_APP:
+        toggleApp(message, exceptTabIds);
+        break;
+      case MSG_TYPE.TOGGLE_COPYMODE:
+        toggleCopyMode(message, exceptTabIds);
+        break;
 
-    default:
-      sendResponse({ type: MSG_TYPE.UNKNOWN });
+      default:
+        sendResponse({ type: MSG_TYPE.UNKNOWN });
+    }
+
+    sendResponse({ type: MSG_TYPE.SUCCESS });
   }
-
-  sendResponse({ type: MSG_TYPE.SUCCESS });
-};
+);
 
 const toggleApp = async (message: Message, exceptTabIds: number[] = []) => {
   await sendMessageToAllTabs(message, exceptTabIds);
@@ -155,14 +146,21 @@ const sendMessageToValidTab = async (
   }
 };
 
-self.addEventListener("install", async () => loadApp());
+const sw: ServiceWorkerGlobalScope = self as any;
 
-/**
- * Since manifest v3,
- * background.js has become a service worker and is disabled when not in use.
- * To deal with this, run only initListener() here.
- */
+// Extenstion restarted
+sw.addEventListener("activate", async (_: ExtendableEvent) => {
+  await initBadge();
+});
 
-initListeners();
+// Extension installed or updated
+chrome.runtime.onInstalled.addListener(async () => {
+  await initApp();
+  await reloadAllTabs();
+});
+// Browser launched (includes updated)
+chrome.runtime.onStartup.addListener(async () => {
+  await initBadge();
+});
 
 export {};

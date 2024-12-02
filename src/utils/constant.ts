@@ -7,7 +7,17 @@ export const MSG_TYPE = {
   COPY_MODE_BOTH: "20240519-5",
   COPY_MODE_SINGLE: "20240519-6",
 } as const;
+
+type MessageType = keyof typeof MSG_TYPE;
+type MessageTypeValue = (typeof MSG_TYPE)[MessageType];
+
 export const MY_EVT = { ...MSG_TYPE } as const;
+
+export type Message = {
+  readonly type: MessageTypeValue;
+  readonly newStatus?: AppStatus;
+  readonly newCopyMode?: CopyMode;
+};
 
 export const APP_STATUS = {
   ON: "1",
