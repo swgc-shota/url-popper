@@ -9,17 +9,20 @@ const createHoverWatcher = (popperTexts: State<PopperTexts>) => {
     }
 
     const currentHoverElement = e.target as Element;
-    const anchorOrNull = currentHoverElement.closest('a');
-    const isImage = currentHoverElement instanceof HTMLImageElement;
-    if (!anchorOrNull && !isImage) {
+    const target = currentHoverElement.closest(
+      'a, h1, h2, h3, h4, h5 ,h6,img'
+    ) as PopSource | null;
+    if (
+      target === null ||
+      (target instanceof HTMLHeadingElement &&
+        target.id === '' &&
+        target.parentElement!.id === '')
+    ) {
       return;
     }
 
     selectComponent('url-popper').classList.remove('mono');
-    const currentTarget = anchorOrNull
-      ? (anchorOrNull as HTMLAnchorElement)
-      : (currentHoverElement as HTMLImageElement);
-    showPopper(popperTexts, currentTarget);
+    showPopper(popperTexts, target);
   };
 
   const on = () => {

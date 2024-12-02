@@ -8,6 +8,8 @@ const updatePopperTexts = (
   let newTexts = null as null | PopperTexts;
   if (source instanceof Document) {
     newTexts = getPageUrlAndTitle(source);
+  } else if (source instanceof HTMLHeadingElement) {
+    newTexts = extractIdAndText(source);
   } else if (source instanceof HTMLAnchorElement) {
     newTexts = extractHrefAndText(source);
   } else if (source instanceof HTMLImageElement) {
@@ -27,6 +29,7 @@ const updatePopperTexts = (
   popperTexts.val = { ...(newTexts as PopperTexts) };
 };
 const isEmpty = (target: string) => /^\s*$/.test(target);
+
 const getPageUrlAndTitle = (doc: Document): PopperTexts => {
   const titleElement =
     doc.querySelector('title') ||
@@ -64,6 +67,21 @@ const extractSrcAndAlt = (dom: HTMLImageElement): PopperTexts => {
   const isUrlExist = dom.src && !isEmpty(dom.src);
   const url = isUrlExist ? dom.src : 'No src attribute';
 
+  return {
+    text,
+    url,
+  };
+};
+
+const extractIdAndText = (dom: HTMLHeadingElement): PopperTexts => {
+  const fragment = isEmpty(dom.id)
+    ? isEmpty(dom.parentElement?.id!)
+      ? ''
+      : dom.parentElement?.id!
+    : dom.id;
+  const url = location.href.split('#')[0] + '#' + fragment;
+  const isTextExist = dom.textContent && !isEmpty(dom.textContent);
+  const text = (isTextExist ? dom.textContent : 'No text content') as string;
   return {
     text,
     url,
