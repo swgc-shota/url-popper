@@ -85,9 +85,10 @@ const showPopper = (popperTexts: State<PopperTexts>, source: PopSource) => {
    */
   const timerId: NodeJS.Timeout = setTimeout(() => {
     updatePositionalState();
+    updatePopperTexts(popperTexts, source, timerId);
+    visiblePopper();
   }, 100);
-  updatePopperTexts(popperTexts, source, timerId);
-  visiblePopper();
+
   hideTimer.set(2000);
 };
 
