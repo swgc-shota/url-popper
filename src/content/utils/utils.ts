@@ -7,8 +7,8 @@
  * the bare minimum necessary.
  * Tutorial | Rollup | https://rollupjs.org/tutorial/
  */
-import type { Message } from "../../utils/constant";
-import { cursorWatcher } from "../cursorWatcher/cursorWatcher";
+import type { Message } from '../../utils/constant';
+import { cursorWatcher } from '../cursorWatcher/cursorWatcher';
 
 let timerId: NodeJS.Timeout | undefined = undefined;
 export const createCallbackTimer = (callback: () => void) => {
@@ -30,34 +30,34 @@ export const getDate = (): string => {
   const currentDate = new Date();
 
   const year = currentDate.getFullYear();
-  const month = String(currentDate.getMonth() + 1).padStart(2, "0");
-  const day = String(currentDate.getDate()).padStart(2, "0");
-  const hours = String(currentDate.getHours()).padStart(2, "0");
-  const minutes = String(currentDate.getMinutes()).padStart(2, "0");
-  const seconds = String(currentDate.getSeconds()).padStart(2, "0");
+  const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+  const day = String(currentDate.getDate()).padStart(2, '0');
+  const hours = String(currentDate.getHours()).padStart(2, '0');
+  const minutes = String(currentDate.getMinutes()).padStart(2, '0');
+  const seconds = String(currentDate.getSeconds()).padStart(2, '0');
 
   return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 };
 
 export const selectComponent = (compName: string) =>
   document
-    .querySelector("url-popper")
+    .querySelector('url-popper')
     ?.shadowRoot?.querySelector(
       `[data-component-name="${compName}"]`
     ) as HTMLElement;
 
 export const selectComponentAll = (compName: string) =>
   document
-    .querySelector("url-popper")
+    .querySelector('url-popper')
     ?.shadowRoot?.querySelectorAll(
       `[data-component-name="${compName}"]`
     ) as NodeList;
 
 export const selectInShadowRoot = (selector: string) =>
-  document.querySelector("url-popper")?.shadowRoot?.querySelector(selector);
+  document.querySelector('url-popper')?.shadowRoot?.querySelector(selector);
 
 export const selectAllInShadowRoot = (selector: string) =>
-  document.querySelector("url-popper")?.shadowRoot?.querySelectorAll(selector);
+  document.querySelector('url-popper')?.shadowRoot?.querySelectorAll(selector);
 
 export const getOptimalPosition = (targetDom: HTMLElement): PositionalProps => {
   const cursorMov: CursorMovement = cursorWatcher.getState();
@@ -70,19 +70,19 @@ export const getOptimalPosition = (targetDom: HTMLElement): PositionalProps => {
   const bottomHeight = window.innerHeight - cursorMov.y.current;
 
   const optimalPosition: PositionalProps = {
-    top: "",
-    left: "",
-    bottom: "",
-    right: "",
+    top: '',
+    left: '',
+    bottom: '',
+    right: '',
   };
 
-  if (cursorMov.x.dir === "toRight") {
+  if (cursorMov.x.dir === 'toRight') {
     if (leftWidth >= popperWidth) {
-      optimalPosition.right = `${rightWidth}px`;
+      optimalPosition.right = `${rightWidth - 36}px`;
     } else {
       optimalPosition.left = `${leftWidth}px`;
     }
-  } else if (cursorMov.x.dir === "toLeft") {
+  } else if (cursorMov.x.dir === 'toLeft') {
     if (rightWidth >= popperWidth) {
       optimalPosition.left = `${leftWidth}px`;
     } else {
@@ -90,13 +90,13 @@ export const getOptimalPosition = (targetDom: HTMLElement): PositionalProps => {
     }
   }
 
-  if (cursorMov.y.dir === "toTop") {
+  if (cursorMov.y.dir === 'toTop') {
     if (bottomHeight >= popperHeight) {
       optimalPosition.top = `${topHeight}px`;
     } else {
       optimalPosition.bottom = `${bottomHeight}px`;
     }
-  } else if (cursorMov.y.dir === "toBottom") {
+  } else if (cursorMov.y.dir === 'toBottom') {
     if (topHeight >= popperHeight) {
       optimalPosition.bottom = `${bottomHeight}px`;
     } else {
