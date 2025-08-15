@@ -2,10 +2,6 @@ URL Popper lets you copy link text, URLs, or both with a single click.
 
 # Overview
 
-URL Popper lets you copy link text, URLs, or both with a single click.
-
-# Overview
-
 When you hover over a link, its text and URL are displayed in a popup. For images or headings that have id, the popup shows the src/alt attributes or id/text content respectively.
 Moving your cursor to the top of the page displays the page title and URL.
 The popup offers several copying options:
